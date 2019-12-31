@@ -143,6 +143,7 @@ namespace MVC.Models
             position = new Vector3(position.x, position.y + 2f);
             transform.position = position;
             transform.rotation = Quaternion.identity;
+            _car.Blink();
         }
     }
 }
