@@ -252,7 +252,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.23
 --- !u!50 &5624317797047468283
 Rigidbody2D:
   serializedVersion: 4
@@ -340,6 +340,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelJointRear: {fileID: 5624317797396143699}
   wheelJointFront: {fileID: 5624317797396143698}
+  wheelRigidbodyRear: {fileID: 5624317797047468283}
+  wheelRigidbodyFront: {fileID: 5624317797621821136}
   wheelRear: {fileID: 2980653442838568321}
   wheelFront: {fileID: 87948776204428122}
   roof: {fileID: 5808247589204351409}
@@ -591,7 +593,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.23
 --- !u!50 &5624317797621821136
 Rigidbody2D:
   serializedVersion: 4

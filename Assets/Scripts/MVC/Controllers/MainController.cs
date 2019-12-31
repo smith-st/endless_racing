@@ -46,6 +46,7 @@ namespace MVC.Controllers
         private void FixedUpdate()
         {
             _wheelie.Display(_car.InAir);
+            _car.FixedUpdate();
         }
 
         private void CheckPrefabs()

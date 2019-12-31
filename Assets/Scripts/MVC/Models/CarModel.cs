@@ -8,6 +8,7 @@ namespace MVC.Models
     public class CarModel: BaseModel, IRoadContactListener
     {
         private const float Speed = 2000f;
+        private const float SpeedUpStep = 0.007f;
         private const float RespawnDelay = 3f;
         private const float AllowedBackDistance = 20f;
         public Vector2 Position => _car.transform.position;
@@ -26,6 +27,7 @@ namespace MVC.Models
         private Coroutine _roofCoroutine;
         private float _maxDistance;
         private Status _status;
+        private float _currentSpeedPercent;
         public CarModel(GameObject prefab, Vector2 startupPosition)
         {
             _car = GameObject.Instantiate(prefab, startupPosition, Quaternion.identity).GetComponent<CarView>();
@@ -35,6 +37,7 @@ namespace MVC.Models
             _car.roof.SetListener(this);
             _car.wheelFront.SetListener(this);
             _car.wheelRear.SetListener(this);
+            SetZeroSpeed();
             Neutral();
         }
 
@@ -46,13 +49,22 @@ namespace MVC.Models
                 Break();
             }
         }
+
+        public void FixedUpdate()
+        {
+            if (_currentSpeedPercent < 1f)
+            {
+                _currentSpeedPercent += SpeedUpStep;
+                SetIntermediateSpeed(_currentSpeedPercent);
+            }
+        }
         public void Accelerate()
         {
             Debug.Log("Accelerate");
             _status = Status.Accelerate;
             _car.wheelJointFront.useMotor = true;
             _car.wheelJointRear.useMotor = true;
-            SetMaxSpeed();
+            _currentSpeedPercent = (_car.wheelRigidbodyRear.angularVelocity + _car.wheelRigidbodyFront.angularVelocity) / 2f / Speed * -1f;
         }
 
         public void Break()
@@ -62,6 +74,7 @@ namespace MVC.Models
             _car.wheelJointFront.useMotor = true;
             _car.wheelJointRear.useMotor = true;
             SetZeroSpeed();
+            _currentSpeedPercent = 1f;
         }
 
         public void Neutral()
@@ -70,11 +83,12 @@ namespace MVC.Models
             _status = Status.Neutral;
             _car.wheelJointFront.useMotor = false;
             _car.wheelJointRear.useMotor = false;
+            _currentSpeedPercent = 1f;
         }
 
-        private void SetMaxSpeed()
+        public void SetIntermediateSpeed(float percent)
         {
-            SetSpeed(-Speed);
+            SetSpeed(-Speed*percent);
         }
 
         private void SetZeroSpeed()
