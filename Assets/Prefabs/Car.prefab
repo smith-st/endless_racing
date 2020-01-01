@@ -90,8 +90,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5624317796503790780}
-  - component: {fileID: 5624317796503790781}
   - component: {fileID: 5808247589204351409}
+  - component: {fileID: 5624317796503790781}
   m_Layer: 10
   m_Name: roof
   m_TagString: CarRoof
@@ -113,6 +113,18 @@ Transform:
   m_Father: {fileID: 5624317797396143710}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5808247589204351409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5624317796503790779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191ce4c4d1a110c40a51a64f226167c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!60 &5624317796503790781
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -139,20 +151,9 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0.21096373, y: 0.32569647}
-      - {x: -1.2027583, y: 0.090717316}
+      - {x: -1.2606254, y: 0.10586119}
+      - {x: -1.2603698, y: 0.090046406}
       - {x: 1.2630866, y: -0.048748493}
---- !u!114 &5808247589204351409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5624317796503790779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 191ce4c4d1a110c40a51a64f226167c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5624317797047468263
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +273,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &2980653442838568321
 MonoBehaviour:
@@ -301,6 +302,8 @@ GameObject:
   - component: {fileID: 5624317797396143697}
   - component: {fileID: 5624317797396143699}
   - component: {fileID: 5624317797396143698}
+  - component: {fileID: 3480042770848397418}
+  - component: {fileID: 1471963912365533298}
   m_Layer: 10
   m_Name: Car
   m_TagString: Untagged
@@ -420,7 +423,7 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -1.2672644, y: 0.09067011}
+    - - {x: -1.2515318, y: 0.09118605}
       - {x: -1.207263, y: -0.18876767}
       - {x: -1.0522738, y: -0.3100736}
       - {x: 1.2437439, y: -0.30999994}
@@ -444,7 +447,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!235 &5624317797396143699
 WheelJoint2D:
@@ -494,6 +497,44 @@ WheelJoint2D:
   m_Motor:
     m_MotorSpeed: -1500
     m_MaximumMotorForce: 10000
+--- !u!232 &3480042770848397418
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5624317797396143709}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 5624317797047468283}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: -0.75, y: -0.3000002}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 0
+  m_Distance: 0.15
+  m_MaxDistanceOnly: 1
+--- !u!232 &1471963912365533298
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5624317797396143709}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 5624317797621821136}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0.91999793, y: -0.32999992}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 0
+  m_Distance: 0.15
+  m_MaxDistanceOnly: 1
 --- !u!1 &5624317797621821148
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +654,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &87948776204428122
 MonoBehaviour:

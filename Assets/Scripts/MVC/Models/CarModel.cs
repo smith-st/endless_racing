@@ -7,7 +7,7 @@ namespace MVC.Models
 {
     public class CarModel: BaseModel, IRoadContactListener
     {
-        private const float Speed = 2000f;
+        private const float Speed = 3000f;
         private const float SpeedUpStep = 0.007f;
         private const float RespawnDelay = 3f;
         private const float AllowedBackDistance = 20f;
@@ -28,10 +28,12 @@ namespace MVC.Models
         private float _maxDistance;
         private Status _status;
         private float _currentSpeedPercent;
+        private float _maxSpeed;
         public CarModel(GameObject prefab, Vector2 startupPosition)
         {
             _car = GameObject.Instantiate(prefab, startupPosition, Quaternion.identity).GetComponent<CarView>();
             CheckView(_car);
+            _maxSpeed = Speed;
             _wheelFrontMotor = _car.wheelJointFront.motor;
             _wheelRearMotor = _car.wheelJointRear.motor;
             _car.roof.SetListener(this);
@@ -58,13 +60,19 @@ namespace MVC.Models
                 SetIntermediateSpeed(_currentSpeedPercent);
             }
         }
+
+        public void ChangeMaxSpeed(float value)
+        {
+            _maxSpeed = value;
+        }
+
         public void Accelerate()
         {
             Debug.Log("Accelerate");
             _status = Status.Accelerate;
             _car.wheelJointFront.useMotor = true;
             _car.wheelJointRear.useMotor = true;
-            _currentSpeedPercent = (_car.wheelRigidbodyRear.angularVelocity + _car.wheelRigidbodyFront.angularVelocity) / 2f / Speed * -1f;
+            _currentSpeedPercent = (_car.wheelRigidbodyRear.angularVelocity + _car.wheelRigidbodyFront.angularVelocity) / 2f / _maxSpeed * -1f;
         }
 
         public void Break()
@@ -88,7 +96,7 @@ namespace MVC.Models
 
         public void SetIntermediateSpeed(float percent)
         {
-            SetSpeed(-Speed*percent);
+            SetSpeed(-_maxSpeed * percent);
         }
 
         private void SetZeroSpeed()

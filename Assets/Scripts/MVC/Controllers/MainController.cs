@@ -17,6 +17,8 @@ namespace MVC.Controllers
         private Text _textDistance;
         [SerializeField]
         private WheelieText _wheelie;
+        [SerializeField]
+        private Slider _speedSlider;
 
         private const float DistanceDivisor = 10f;
 
@@ -84,6 +86,11 @@ namespace MVC.Controllers
             {
                 _car.Neutral();
             }
+        }
+
+        public void ChangeCarMaxSpeed()
+        {
+            _car.ChangeMaxSpeed(_speedSlider.value);
         }
     }
 }
