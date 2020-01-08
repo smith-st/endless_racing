@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using CarParts;
 using UnityEngine;
 
@@ -30,16 +29,16 @@ namespace MVC.Views
         private IEnumerator BlinkRoutine()
         {
             const float delay = 0.1f;
-            for (int i = 1; i <= 5; i++)
+            for (var i = 1; i <= 5; i++)
             {
-                ShowForAllSprites(false);
+                ShowAllSprites(false);
                 yield return new WaitForSeconds(delay);
-                ShowForAllSprites(true);
+                ShowAllSprites(true);
                 yield return new WaitForSeconds(delay);
             }
         }
 
-        private void ShowForAllSprites(bool isShow)
+        private void ShowAllSprites(bool isShow)
         {
             foreach (var sprite in _sprites)
             {

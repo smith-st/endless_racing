@@ -14,7 +14,6 @@ namespace MVC.Models
         private const float PartMaxLength = 20f;
         private const float HeightDifference = 10f;
 
-        private GameObject _prefab;
         private List<RoadView> _roads = new List<RoadView>(RoadParts);
         private float _changeRoadDistance;
         private List<Vector2> _baseRoadPoints;
@@ -27,7 +26,7 @@ namespace MVC.Models
             RoadView lastAddedRoad = null;
             for (var i = 0; i < RoadParts; i++)
             {
-                road = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.identity).GetComponent<RoadView>();
+                road = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity).GetComponent<RoadView>();
                 CheckView(road);
                 _roads.Add(road);
 
@@ -109,22 +108,12 @@ namespace MVC.Models
             return basePoints;
         }
 
-        /// <summary>
-        /// Return next point on road line for change height
-        /// </summary>
-        /// <param name="currentPosition"></param>
-        /// <returns></returns>
         private float NextPoint(float currentPosition)
         {
             var partLength = Random.Range(PartMinLength, PartMaxLength);
             return currentPosition + partLength;
         }
-        /// <summary>
-        /// Return direction of height difference
-        /// </summary>
-        /// <param name="lastDifferenceDirection"></param>
-        /// <param name="repetitiveDifferenceDirection"></param>
-        /// <returns></returns>
+
         private int DifferenceDirection(ref int lastDifferenceDirection, ref int repetitiveDifferenceDirection)
         {
             int differenceDirection;

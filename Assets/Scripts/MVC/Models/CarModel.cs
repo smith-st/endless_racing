@@ -7,10 +7,10 @@ namespace MVC.Models
 {
     public class CarModel: BaseModel, IRoadContactListener
     {
-        private const float Speed = 3000f;
         private const float SpeedUpStep = 0.007f;
         private const float RespawnDelay = 3f;
-        private const float AllowedBackDistance = 20f;
+        private const float AllowedRollbackDistance = 20f;
+
         public Vector2 Position => _car.transform.position;
         public bool InAir => !_car.wheelFront.IsContact && !_car.wheelRear.IsContact;
 
@@ -31,22 +31,18 @@ namespace MVC.Models
         private float _maxSpeed;
         public CarModel(GameObject prefab, Vector2 startupPosition)
         {
-            _car = GameObject.Instantiate(prefab, startupPosition, Quaternion.identity).GetComponent<CarView>();
+            _car = Object.Instantiate(prefab, startupPosition, Quaternion.identity).GetComponent<CarView>();
             CheckView(_car);
-            _maxSpeed = Speed;
-            _wheelFrontMotor = _car.wheelJointFront.motor;
-            _wheelRearMotor = _car.wheelJointRear.motor;
+            ReceiveMotorsFromWheels();
             _car.roof.SetListener(this);
-            _car.wheelFront.SetListener(this);
-            _car.wheelRear.SetListener(this);
-            SetZeroSpeed();
+            SetSpeed(0f);
             Neutral();
         }
 
         public void Update()
         {
             _maxDistance = Mathf.Max(_maxDistance, _car.transform.position.x);
-            if (_status == Status.Neutral && _maxDistance - Position.x > AllowedBackDistance)
+            if (_status == Status.Neutral && _maxDistance - Position.x > AllowedRollbackDistance)
             {
                 Break();
             }
@@ -57,7 +53,7 @@ namespace MVC.Models
             if (_currentSpeedPercent < 1f)
             {
                 _currentSpeedPercent += SpeedUpStep;
-                SetIntermediateSpeed(_currentSpeedPercent);
+                SetSpeedInPercent(_currentSpeedPercent);
             }
         }
 
@@ -70,18 +66,16 @@ namespace MVC.Models
         {
             Debug.Log("Accelerate");
             _status = Status.Accelerate;
-            _car.wheelJointFront.useMotor = true;
-            _car.wheelJointRear.useMotor = true;
-            _currentSpeedPercent = (_car.wheelRigidbodyRear.angularVelocity + _car.wheelRigidbodyFront.angularVelocity) / 2f / _maxSpeed * -1f;
+            UseMotor(true);
+            _currentSpeedPercent = GetCurrentSpeedInPercent();
         }
 
         public void Break()
         {
             Debug.Log("Break");
             _status = Status.Break;
-            _car.wheelJointFront.useMotor = true;
-            _car.wheelJointRear.useMotor = true;
-            SetZeroSpeed();
+            UseMotor(true);
+            SetSpeed(0f);
             _currentSpeedPercent = 1f;
         }
 
@@ -89,19 +83,13 @@ namespace MVC.Models
         {
             Debug.Log("Neutral");
             _status = Status.Neutral;
-            _car.wheelJointFront.useMotor = false;
-            _car.wheelJointRear.useMotor = false;
+            UseMotor(false);
             _currentSpeedPercent = 1f;
         }
 
-        public void SetIntermediateSpeed(float percent)
+        private void SetSpeedInPercent(float percent)
         {
             SetSpeed(-_maxSpeed * percent);
-        }
-
-        private void SetZeroSpeed()
-        {
-            SetSpeed(0f);
         }
 
         private void SetSpeed(float value)
@@ -114,26 +102,20 @@ namespace MVC.Models
 
         public void StartContactWithRoad(string tag)
         {
-            if (tag == "CarRoof")
+            if (_roofCoroutine != null)
             {
-                if (_roofCoroutine != null)
-                {
-                    return;
-                }
-
-                _roofCoroutine = _car.StartCoroutine(CarOnRoof());
+                return;
             }
+
+            _roofCoroutine = _car.StartCoroutine(CarOnRoof());
         }
 
         public void StopContactWithRoad(string tag)
         {
-            if (tag == "CarRoof")
+            if (_roofCoroutine != null)
             {
-                if (_roofCoroutine != null)
-                {
-                    _car.StopCoroutine(_roofCoroutine);
-                    _roofCoroutine = null;
-                }
+                _car.StopCoroutine(_roofCoroutine);
+                _roofCoroutine = null;
             }
         }
 
@@ -152,6 +134,23 @@ namespace MVC.Models
             transform.position = position;
             transform.rotation = Quaternion.identity;
             _car.Blink();
+        }
+
+        private void UseMotor(bool value)
+        {
+            _car.wheelJointFront.useMotor = value;
+            _car.wheelJointRear.useMotor = value;
+        }
+
+        private float GetCurrentSpeedInPercent()
+        {
+            return (_car.wheelRigidbodyRear.angularVelocity + _car.wheelRigidbodyFront.angularVelocity) / 2f / _maxSpeed * -1f;
+        }
+
+        private void ReceiveMotorsFromWheels()
+        {
+            _wheelFrontMotor = _car.wheelJointFront.motor;
+            _wheelRearMotor = _car.wheelJointRear.motor;
         }
     }
 }

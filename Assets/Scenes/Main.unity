@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b8a75b558fe37242b5fcec6d2121098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnDown:
+  onDown:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1454790003}
@@ -251,7 +251,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  OnUp:
+  onUp:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1454790003}
@@ -733,7 +733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b8a75b558fe37242b5fcec6d2121098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnDown:
+  onDown:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1454790003}
@@ -747,7 +747,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  OnUp:
+  onUp:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1454790003}
@@ -981,13 +981,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81226db1116561f4bbfdd86891fb1d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roadPrefab: {fileID: 5068352388948237680, guid: 7835d4428aeffb044b4beae0fb4d62a4,
+  roadPrefab: {fileID: 5068352388948237680, guid: 7835d4428aeffb044b4beae0fb4d62a4,
     type: 3}
-  _carPrefab: {fileID: 5624317797396143709, guid: 5db89ac971397bc4396b22b7700dd74f,
+  carPrefab: {fileID: 5624317797396143709, guid: 5db89ac971397bc4396b22b7700dd74f,
     type: 3}
-  _textDistance: {fileID: 1862246580}
-  _wheelie: {fileID: 364531254}
-  _speedSlider: {fileID: 421073925}
+  textDistance: {fileID: 1862246580}
+  wheelie: {fileID: 364531254}
+  speedSlider: {fileID: 421073925}
 --- !u!1 &1472304855
 GameObject:
   m_ObjectHideFlags: 0

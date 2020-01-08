@@ -15,20 +15,16 @@ namespace CarParts
         }
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.gameObject.CompareTag("Road"))
-            {
-                _listener?.StartContactWithRoad(gameObject.tag);
-                IsContact = true;
-            }
+            if (!other.gameObject.CompareTag("Road")) return;
+            _listener?.StartContactWithRoad(gameObject.tag);
+            IsContact = true;
         }
 
         private void OnCollisionExit2D(Collision2D other)
         {
-            if (other.gameObject.CompareTag("Road"))
-            {
-                _listener?.StopContactWithRoad(gameObject.tag);
-                IsContact = false;
-            }
+            if (!other.gameObject.CompareTag("Road")) return;
+            _listener?.StopContactWithRoad(gameObject.tag);
+            IsContact = false;
         }
     }
 }
