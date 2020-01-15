@@ -1,18 +1,18 @@
 using System.Collections;
-using CarParts;
+using BikeParts;
 using MVC.Views;
 using UnityEngine;
 
 namespace MVC.Models
 {
-    public class CarModel: BaseModel, IRoadContactListener
+    public class BikeModel: BaseModel, IRoadContactListener
     {
-        private const float SpeedUpStep = 0.007f;
+        private const float SpeedUpStep = 0.01f;
         private const float RespawnDelay = 3f;
         private const float AllowedRollbackDistance = 20f;
 
-        public Vector2 Position => _car.transform.position;
-        public bool InAir => !_car.wheelFront.IsContact && !_car.wheelRear.IsContact;
+        public Vector2 Position => _bike.transform.position;
+        public bool onRearWheel => !_bike.wheelFront.IsContact && _bike.wheelRear.IsContact;
 
         private enum Status
         {
@@ -21,7 +21,7 @@ namespace MVC.Models
             Neutral
         }
 
-        private CarView _car;
+        private BikeView _bike;
         private JointMotor2D _wheelFrontMotor;
         private JointMotor2D _wheelRearMotor;
         private Coroutine _roofCoroutine;
@@ -29,19 +29,19 @@ namespace MVC.Models
         private Status _status;
         private float _currentSpeedPercent;
         private float _maxSpeed;
-        public CarModel(GameObject prefab, Vector2 startupPosition)
+        public BikeModel(GameObject prefab, Vector2 startupPosition)
         {
-            _car = Object.Instantiate(prefab, startupPosition, Quaternion.identity).GetComponent<CarView>();
-            CheckView(_car);
+            _bike = Object.Instantiate(prefab, startupPosition, Quaternion.identity).GetComponent<BikeView>();
+            CheckView(_bike);
             ReceiveMotorsFromWheels();
-            _car.roof.SetListener(this);
+            _bike.roof.SetListener(this);
             SetSpeed(0f);
             Neutral();
         }
 
         public void Update()
         {
-            _maxDistance = Mathf.Max(_maxDistance, _car.transform.position.x);
+            _maxDistance = Mathf.Max(_maxDistance, _bike.transform.position.x);
             if (_status == Status.Neutral && _maxDistance - Position.x > AllowedRollbackDistance)
             {
                 Break();
@@ -96,8 +96,8 @@ namespace MVC.Models
         {
             _wheelFrontMotor.motorSpeed = value;
             _wheelRearMotor.motorSpeed = value;
-            _car.wheelJointFront.motor = _wheelFrontMotor;
-            _car.wheelJointRear.motor = _wheelRearMotor;
+            _bike.wheelJointFront.motor = _wheelFrontMotor;
+            _bike.wheelJointRear.motor = _wheelRearMotor;
         }
 
         public void StartContactWithRoad(string tag)
@@ -107,50 +107,50 @@ namespace MVC.Models
                 return;
             }
 
-            _roofCoroutine = _car.StartCoroutine(CarOnRoof());
+            _roofCoroutine = _bike.StartCoroutine(BikeOnRoof());
         }
 
         public void StopContactWithRoad(string tag)
         {
             if (_roofCoroutine != null)
             {
-                _car.StopCoroutine(_roofCoroutine);
+                _bike.StopCoroutine(_roofCoroutine);
                 _roofCoroutine = null;
             }
         }
 
-        private IEnumerator CarOnRoof()
+        private IEnumerator BikeOnRoof()
         {
             yield return new WaitForSeconds(RespawnDelay);
-            RespawnCar();
+            Respawn();
             _roofCoroutine = null;
         }
 
-        private void RespawnCar()
+        private void Respawn()
         {
-            var transform = _car.transform;
+            var transform = _bike.transform;
             var position = transform.position;
             position = new Vector3(position.x, position.y + 2f);
             transform.position = position;
             transform.rotation = Quaternion.identity;
-            _car.Blink();
+            _bike.Blink();
         }
 
         private void UseMotor(bool value)
         {
-            _car.wheelJointFront.useMotor = value;
-            _car.wheelJointRear.useMotor = value;
+            _bike.wheelJointFront.useMotor = value;
+            _bike.wheelJointRear.useMotor = value;
         }
 
         private float GetCurrentSpeedInPercent()
         {
-            return (_car.wheelRigidbodyRear.angularVelocity + _car.wheelRigidbodyFront.angularVelocity) / 2f / _maxSpeed * -1f;
+            return (_bike.wheelRigidbodyRear.angularVelocity + _bike.wheelRigidbodyFront.angularVelocity) / 2f / _maxSpeed * -1f;
         }
 
         private void ReceiveMotorsFromWheels()
         {
-            _wheelFrontMotor = _car.wheelJointFront.motor;
-            _wheelRearMotor = _car.wheelJointRear.motor;
+            _wheelFrontMotor = _bike.wheelJointFront.motor;
+            _wheelRearMotor = _bike.wheelJointRear.motor;
         }
     }
 }

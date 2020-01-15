@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CarParts
+namespace BikeParts
 {
     [RequireComponent(typeof(Collider2D))]
     public class RoadContact : MonoBehaviour

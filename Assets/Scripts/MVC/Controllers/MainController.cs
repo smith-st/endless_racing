@@ -9,7 +9,7 @@ namespace MVC.Controllers
     public class MainController : MonoBehaviour
     {
         public GameObject roadPrefab;
-        public GameObject carPrefab;
+        public GameObject bikePrefab;
         [Space]
         public Text textDistance;
         public WheelieText wheelie;
@@ -19,7 +19,7 @@ namespace MVC.Controllers
 
         private Transform _cameraTransform;
         private RoadModel _road;
-        private CarModel _car;
+        private BikeModel _bike;
 
         private void Awake()
         {
@@ -27,28 +27,28 @@ namespace MVC.Controllers
             CheckPrefabs();
             _cameraTransform = Camera.main.transform;
             _road = new RoadModel(roadPrefab);
-            _car = new CarModel(carPrefab, new Vector2(0f, 1f));
-            ChangeCarMaxSpeed();
+            _bike = new BikeModel(bikePrefab, new Vector2(0f, 1f));
+            ChangeBikeMaxSpeed();
         }
 
         private void Update()
         {
-            _cameraTransform.position = new Vector3(_car.Position.x+3f, _car.Position.y+1.5f, _cameraTransform.position.z);
-            _road.CarPosition(_car.Position);
-            textDistance.text = Mathf.Round(_car.Position.x/DistanceDivisor).ToString();
-            _car.Update();
+            _cameraTransform.position = new Vector3(_bike.Position.x+3f, _bike.Position.y+1.5f, _cameraTransform.position.z);
+            _road.BikePosition(_bike.Position);
+            textDistance.text = Mathf.Max(0f ,Mathf.Round(_bike.Position.x/DistanceDivisor)).ToString();
+            _bike.Update();
         }
         private void FixedUpdate()
         {
-            wheelie.Display(_car.InAir);
-            _car.FixedUpdate();
+            wheelie.Display(_bike.onRearWheel);
+            _bike.FixedUpdate();
         }
 
         private void CheckPrefabs()
         {
-            if (carPrefab == null)
+            if (bikePrefab == null)
             {
-                throw new Exception("Car prefab not assigned");
+                throw new Exception("Bike prefab not assigned");
             }
 
             if (roadPrefab == null)
@@ -61,11 +61,11 @@ namespace MVC.Controllers
         {
             if (value)
             {
-                _car.Accelerate();
+                _bike.Accelerate();
             }
             else
             {
-                _car.Neutral();
+                _bike.Neutral();
             }
         }
 
@@ -73,17 +73,17 @@ namespace MVC.Controllers
         {
             if (value)
             {
-                _car.Break();
+                _bike.Break();
             }
             else
             {
-                _car.Neutral();
+                _bike.Neutral();
             }
         }
 
-        public void ChangeCarMaxSpeed()
+        public void ChangeBikeMaxSpeed()
         {
-            _car.ChangeMaxSpeed(speedSlider.value);
+            _bike.ChangeMaxSpeed(speedSlider.value);
         }
     }
 }

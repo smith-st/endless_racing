@@ -1,11 +1,11 @@
 ﻿using System.Collections;
-using CarParts;
+using BikeParts;
 using UnityEngine;
 
 namespace MVC.Views
 {
     [RequireComponent(typeof(WheelJoint2D))]
-    public class CarView : MonoBehaviour
+    public class BikeView : MonoBehaviour
     {
         public WheelJoint2D wheelJointRear;
         public WheelJoint2D wheelJointFront;

@@ -7,7 +7,7 @@ namespace UI
     public class WheelieText : MonoBehaviour
     {
         private Text _text;
-        private byte _counter;
+        private int _counter;
         private bool _status = true;
 
         private void Awake()
@@ -24,6 +24,13 @@ namespace UI
                 if (_counter == 0)
                 {
                     _text.enabled = true;
+                }
+            }else if (_counter < 0)
+            {
+                _counter++;
+                if (_counter == 0)
+                {
+                    _text.enabled = false;
                 }
             }
         }
@@ -42,8 +49,7 @@ namespace UI
             }
             else
             {
-                _text.enabled = false;
-                _counter = 0;
+                _counter = -10;
             }
         }
     }

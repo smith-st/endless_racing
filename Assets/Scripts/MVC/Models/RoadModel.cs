@@ -137,7 +137,7 @@ namespace MVC.Models
             return differenceDirection;
         }
 
-        public void CarPosition(Vector2 position)
+        public void BikePosition(Vector2 position)
         {
             if (position.x > _changeRoadDistance)
             {

@@ -65,14 +65,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CarParts\IRoadContactListener.cs" />
-    <Compile Include="Assets\Scripts\CarParts\RoadContact.cs" />
+    <Compile Include="Assets\Scripts\BikeParts\IRoadContactListener.cs" />
+    <Compile Include="Assets\Scripts\BikeParts\RoadContact.cs" />
     <Compile Include="Assets\Scripts\ListExtensions.cs" />
     <Compile Include="Assets\Scripts\MVC\Controllers\MainController.cs" />
     <Compile Include="Assets\Scripts\MVC\Models\BaseModel.cs" />
-    <Compile Include="Assets\Scripts\MVC\Models\CarModel.cs" />
+    <Compile Include="Assets\Scripts\MVC\Models\BikeModel.cs" />
     <Compile Include="Assets\Scripts\MVC\Models\RoadModel.cs" />
-    <Compile Include="Assets\Scripts\MVC\Views\CarView.cs" />
+    <Compile Include="Assets\Scripts\MVC\Views\BikeView.cs" />
     <Compile Include="Assets\Scripts\MVC\Views\RoadView.cs" />
     <Compile Include="Assets\Scripts\UI\ControlButton.cs" />
     <Compile Include="Assets\Scripts\UI\WheelieText.cs" />

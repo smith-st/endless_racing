@@ -481,7 +481,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1454790003}
-        m_MethodName: ChangeCarMaxSpeed
+        m_MethodName: ChangeBikeMaxSpeed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -983,7 +983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roadPrefab: {fileID: 5068352388948237680, guid: 7835d4428aeffb044b4beae0fb4d62a4,
     type: 3}
-  carPrefab: {fileID: 5624317797396143709, guid: 5db89ac971397bc4396b22b7700dd74f,
+  bikePrefab: {fileID: 5624317797396143709, guid: 5db89ac971397bc4396b22b7700dd74f,
     type: 3}
   textDistance: {fileID: 1862246580}
   wheelie: {fileID: 364531254}
@@ -1322,8 +1322,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -228, y: -11}
-  m_SizeDelta: {x: 133, y: 84.2}
+  m_AnchoredPosition: {x: -269.4, y: -11}
+  m_SizeDelta: {x: 215.8, y: 84.2}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1894691964
 MonoBehaviour:
@@ -1356,7 +1356,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Speed
+  m_Text: Max speed
 --- !u!222 &1894691965
 CanvasRenderer:
   m_ObjectHideFlags: 0
